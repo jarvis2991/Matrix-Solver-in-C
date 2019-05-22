@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+
+int main() {
+int n;
+printf("Enter the number of equations:");
+scanf("%d",&n);
+float a[n][n],x[n],b[n];
+float w=1.6;
+int i,j,p,q,max_iterations;
+float sum,xnew[n];
+max_iterations=1000;
+for (i=0;i<n;i++) {
+for (j=0;j<n;j++){
+printf("\n a[%d][%d]=",i+1,j+1);
+scanf("%f",&a[i][j]);
+}
+}
+
+for (p=0;p<n;p++){
+printf("\n Enter the constant in equation %d = ",p+1);
+scanf("%f",&b[p]);
+}
+for(q=0;q<n;q++){
+    x[q]=0;
+    xnew[q]=0;
+}
+
+for (q=0;q<max_iterations;q++) {
+for (i=0;i<n;i++) {
+sum=0;
+for(j=0;j<i;j++){
+if(i!=j){
+    sum += a[i][j] * xnew[j];
+}
+}
+for(j=i+1;j<n;j++){
+
+    sum += a[i][j] * x[j];
+}
+
+xnew[i]= (1-w)*x[i] + w*((b[i] - sum )/a[i][i]) ;
+}
+for(p=0;p<n;p++){
+x[p]=xnew[p];
+}
+printf("%d number of iteration:\n",q+1);
+
+for(p=0;p<n;p++){
+printf("%f\n",x[p]);
+}
+}
+
+printf("FINAL ANSWER\n");
+for(p=0;p<n;p++){
+printf("x%d = %f\n",p+1,x[p]);
+}
+}
+
